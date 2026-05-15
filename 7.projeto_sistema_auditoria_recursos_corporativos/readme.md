@@ -56,4 +56,3 @@ A função principal aceita parâmetros nomeados opcionais (`moeda_destino`, `ta
 1. Acesse o [Google Colab](https://colab.research.google.com/) ou execute localmente com Python 3.
 2. Abra o arquivo `sistema_de_auditoria_de_recursos_corporativos.py`.
 3. Execute — os 3 testes rodam automaticamente e exibem o log completo de auditoria para cada cenário.
----
