@@ -1,58 +1,47 @@
-# 🏢 Sistema de Auditoria de Recursos Corporativos
+# 🧩 Modularização — Sistema de Caixa
  
 ## 📝 Descrição do Projeto
  
-Este projeto consiste em um sistema em Python para realizar auditoria e cálculo de orçamentos corporativos, utilizando **recursão**, **decorators** e **estruturas de dados aninhadas**. O sistema navega por uma hierarquia corporativa de múltiplos níveis (Matriz → Departamentos → Subdepartamentos) para consolidar orçamentos, aplicar filtros e converter valores entre moedas.
+Este projeto consiste em um sistema de caixa comercial desenvolvido com foco em **modularização**: a solução é dividida em 5 módulos independentes, cada um com responsabilidade única, que se comunicam entre si para realizar o processo completo de uma venda — da validação do pagamento até a emissão do recibo com o troco em notas.
  
-Desenvolvido como parte da disciplina de **Sistema de Auditoria de Recursos Corporativos**, o projeto explora recursos avançados de Python como `*args`, `**kwargs`, funções de ordem superior e a separação entre lógica de negócio e lógica de monitoramento via decorator.
+Desenvolvido como parte da disciplina de **Modularização**, o projeto demonstra na prática como decompor um problema complexo em funções menores, reutilizáveis e de fácil manutenção, aplicando o princípio de **separação de responsabilidades**.
  
-## ⚙️ Arquitetura do Sistema
+## ⚙️ Arquitetura dos Módulos
  
-### 🗂️ Estrutura de Dados (Dicionário Aninhado)
+| Módulo | Função | Responsabilidade |
+|--------|--------|-----------------|
+| **Módulo 1** | `validar_pagamento(total, pago)` | Verifica se o valor pago é suficiente para cobrir o total da compra. Retorna Verdadeiro ou Falso. |
+| **Módulo 2** | `calcular_troco(total, pago)` | Calcula o troco: `troco ← pago - total`. Retorna o valor do troco. |
+| **Módulo 3** | `decompor_notas(troco)` | Quebra o troco nas menores quantidades de notas possíveis usando as denominações [100, 50, 10, 5, 1]. |
+| **Módulo 4** | `exibir_recibo(total, pago, troco, notas)` | Imprime o recibo formatado com cabeçalho, composição do troco em notas e rodapé. |
+| **Módulo 5** | `sistema_caixa()` | Módulo principal: lê os dados, valida o pagamento e orquestra a chamada dos demais módulos. |
+ 
+## 🔄 Fluxo de Execução
+ 
 ```
-Matriz
-├── TI
-│   ├── Infraestrutura → Servidores (50.000) + Segurança (30.000)
-│   └── Desenvolvimento → Frontend (20.000) + Backend (25.000) + DevOps (15.000)
-├── RH
-│   ├── Recrutamento (10.000) + Treinamento (12.000)
-│   └── Cultura → Eventos (5.000) + Brindes (2.000)
-└── Financeiro (40.000)
+Início
+  → Ler total_compra e valor_pago
+  → Módulo 1: validar_pagamento?
+      SIM → Módulo 2: calcular_troco
+           → Módulo 3: decompor_notas
+           → Módulo 4: exibir_recibo
+      NÃO → Escrever "ERRO: Pagamento Insuficiente" → Encerrar
+Fim
 ```
- 
-### 🔁 Função Recursiva — `calcular_orcamento_recursivo()`
-Percorre a árvore de departamentos independente de quantos níveis ela tenha:
-- **Caso base:** valor é numérico → soma diretamente
-- **Caso recursivo:** valor é um dicionário → chama a si mesma para o subdicionário
-- Aceita `*deptos_ignorados` para excluir departamentos da soma
-### 🔍 Decorator — `@auditor`
-Envolve qualquer função auditada sem modificar seu código, adicionando automaticamente:
-- Log de entrada com `args` e `kwargs`
-- Medição de tempo de execução com `time.time()`
-### 💱 Conversão de Moeda — `**kwargs`
-A função principal aceita parâmetros nomeados opcionais (`moeda_destino`, `taxa_cambio`) para converter o orçamento em qualquer moeda.
- 
-## 🧪 Casos de Teste
- 
-| Teste | Descrição | Resultado |
-|-------|-----------|-----------|
-| **Teste 1** | Orçamento total sem filtros | USD 209.000,00 |
-| **Teste 2** | Ignorando `Cultura` e `Desenvolvimento` | Soma sem esses departamentos |
-| **Teste 3** | Conversão para BRL (taxa 5,20) | BRL 1.086.800,00 |
  
 ## 📊 Resultados e Aprendizados
  
-- **Recursão para estruturas dinâmicas:** A solução recursiva funciona independente da profundidade da hierarquia — adicionar novos níveis à empresa não exige alteração no código.
-- **Decorator como camada de observabilidade:** O `@auditor` é aplicado com uma linha e transforma qualquer função em uma função auditada, sem acoplamento com a lógica de negócio.
-- **`*args` e `**kwargs` juntos:** A mesma função aceita lista variável de departamentos a ignorar E parâmetros nomeados de câmbio simultaneamente, demonstrando a flexibilidade da assinatura de funções em Python.
-## 🚀 Tecnologias Utilizadas
+- **Modularização reduz complexidade:** Cada função faz apenas uma coisa, tornando o código fácil de testar e corrigir isoladamente.
+- **Algoritmo guloso em `decompor_notas`:** O módulo percorre as denominações do maior para o menor valor, usando divisão inteira e módulo — garantindo sempre o menor número de notas possível.
+- **Separação entre lógica e apresentação:** A validação (Módulo 1), o cálculo (Módulos 2 e 3) e a exibição (Módulo 4) são completamente independentes, permitindo alterar um sem impactar os demais.
+## 🛠️ Tecnologias e Conceitos Utilizados
  
-- **Linguagem:** Python 3
-- **Biblioteca:** `time`
-- **Conceitos aplicados:** Recursão, decorators, `*args`, `**kwargs`, dicionários aninhados, funções de ordem superior, constantes globais, conversão de tipos
-- **Ferramenta:** Google Colab
-## 🔧 Como Executar
+- **Representação:** Fluxogramas por módulo + Pseudocódigo estruturado
+- **Conceitos aplicados:** Funções com parâmetros e retorno, estruturas de repetição (`para cada`), operadores de divisão inteira e módulo (`mod`), listas, mapas (dicionários)
+- **Ferramenta:** Desenvolvido manualmente (caderno) como exercício de lógica modular
+## 🔧 Arquivos do Projeto
  
-1. Acesse o [Google Colab](https://colab.research.google.com/) ou execute localmente com Python 3.
-2. Abra o arquivo `sistema_de_auditoria_de_recursos_corporativos.py`.
-3. Execute — os 3 testes rodam automaticamente e exibem o log completo de auditoria para cada cenário.
+- `modulos_1_2_3_fluxograma.jpg` — Fluxogramas dos módulos 1, 2 e 3
+- `modulos_4_5_fluxograma.jpg` — Fluxogramas dos módulos 4 e 5
+- `pseudocodigo_funcoes.jpg` — Pseudocódigo completo das funções
+- `pseudocodigo_sistema_caixa.jpg` — Pseudocódigo do programa principal
