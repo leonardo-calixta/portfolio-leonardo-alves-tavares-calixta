@@ -11,7 +11,7 @@
 ---
  
 ### 👨‍💻 Sobre
-Atualmente cursando o 1º período de Análise e Desenvolvimento de Sistemas na Universidade Cidade de São Paulo (UNICID). Sou apaixonado por resolver problemas através da tecnologia e possuo foco em desenvolvimento de soluções digitais que unem lógica, design e experiência do usuário.
+Atualmente cursando o 2º período de Análise e Desenvolvimento de Sistemas na Universidade Cidade de São Paulo (UNICID). Sou apaixonado por resolver problemas através da tecnologia e possuo foco em desenvolvimento de soluções digitais que unem lógica, design e experiência do usuário.
  
 * **Habilidades Técnicas:** Python, C, VS Code, Google Colab, Figma, Canva.
 * **Habilidades Socioemocionais:** Trabalho em equipe, comunicação assertiva e pensamento crítico.
